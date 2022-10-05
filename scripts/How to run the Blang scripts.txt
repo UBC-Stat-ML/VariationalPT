@@ -1,0 +1,19 @@
+First time you clone the "ptanalysis" repo:
+git clone git@github.com:UBC-Stat-ML/ptanalysis.git
+./gradlew clean
+./gradlew installDist
+
+
+Spatial model(s):
+./pt-matching.sh --model ptbm.models.SparseCAR --model.data data/scotland_lip_cancer/data.csv --model.spatialData.adjacency data/scotland_lip_cancer/adj.csv --engine.nChains 20 --engine.nScans 20_000 --engine.nThreads max --postProcessor ptgrad.VariationalPostprocessor --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+./pt-matching.sh --model ptbm.models.SparseCAR --model.data data/scotland_lip_cancer/data.csv --model.spatialData.adjacency data/scotland_lip_cancer/adj.csv --engine.nChains 20 --engine.nScans 20_000 --engine.nThreads max --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+
+./pt-matching.sh --model ptbm.models.SparseCAR --model.data data/pollution_health/data.csv --model.spatialData.adjacency data/pollution_health/adj.csv --engine.nChains 150 --engine.nScans 100_000 --engine.nThreads max --postProcessor ptgrad.VariationalPostprocessor --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+./pt-matching.sh --model ptbm.models.SparseCAR --model.data data/pollution_health/data.csv --model.spatialData.adjacency data/pollution_health/adj.csv --engine.nChains 150 --engine.nScans 100_000 --engine.nThreads max --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+
+Vaccine example:
+./pt-matching.sh --model ptbm.models.Vaccines --model.data data/vaccines/data.csv --engine.nChains 20 --engine.nScans 20_000 --engine.nThreads max --postProcessor ptgrad.VariationalPostprocessor --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+./pt-matching.sh --model ptbm.models.Vaccines --model.data data/vaccines/data.csv --engine.nChains 20 --engine.nScans 20_000 --engine.nThreads max --treatNaNAsNegativeInfinity true --engine.scmInit.nParticles 10 --engine.scmInit.temperatureSchedule.threshold 0.9
+
+
+Because you don't always need plots, you can remove the --postProcessor option (second line for each model).

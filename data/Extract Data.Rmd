@@ -1,0 +1,114 @@
+---
+title: "Extract Data"
+author: "Nikola Surjanovic"
+date: "10/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls())
+```
+
+```{r}
+bl <- "Blang/"
+```
+
+
+# Rockets
+
+```{r}
+old_name <- "failure_counts.csv"
+new_name <- "rockets.csv"
+file.copy(from = paste0(bl, old_name), to = new_name)
+```
+
+
+# Transfection
+
+```{r}
+old_name <- "m_rna_transfection/processed.csv"
+new_name <- "transfection.csv"
+file.copy(from = paste0(bl, old_name), to = new_name)
+```
+
+
+# Elliptic
+
+Not necessary to import or create data.
+
+
+# Simple-Mix
+
+```{r}
+old_name <- "mixture_data.csv"
+new_name <- "simple-mix.csv"
+file.copy(from = paste0(bl, old_name), to = new_name)
+```
+
+
+# Challenger
+
+```{r}
+old_name <- "challenger/incidents.csv"
+inc <- read.csv(file = paste0(bl, old_name), header = FALSE)
+
+old_name <- "challenger/temperatures.csv"
+temp <- read.csv(file = paste0(bl, old_name), header = FALSE)
+
+challenger <- cbind(inc, temp)
+challenger <- na.omit(challenger)
+colnames(challenger) <- c("inc", "temp")
+
+write.csv(challenger, file = "challenger.csv", row.names = FALSE)
+```
+
+
+# Product
+
+Not necessary to import or create data.
+
+
+# Titanic
+
+```{r}
+old_name <- "titanic/titanic.csv"
+dat <- read.csv(file = paste0(bl, old_name), header = TRUE)
+dat$Name <- NULL
+
+dat$Pclass2 <- dat$Pclass == 2
+dat$Pclass3 <- dat$Pclass == 3
+dat$Pclass <- NULL
+dat$male <- dat$Sex == "male"
+dat$Sex <- NULL
+
+dat$Pclass2 <- as.numeric(dat$Pclass2)
+dat$Pclass3 <- as.numeric(dat$Pclass3)
+dat$male <- as.numeric(dat$male)
+
+colnames(dat) <- c("survived", "age", "sibspo", "parchi", "fare", "pclass2", "pclass3", "male")
+
+write.csv(dat, file = "titanic.csv", row.names = FALSE)
+```
+
+
+# Difficult-Mix
+
+```{r}
+n <- 1000L # Sample size
+means <- matrix(rep(seq(0, 90, 10), 10), ncol = 10, byrow = TRUE)  # True means
+dat <- matrix(NA, nrow = n, ncol = 10)
+
+library(mvtnorm)
+set.seed(2013506)
+
+for (i in 1:n) {
+  comp <- sample(1:10, size = 1) # Component
+  dat[i, ] <- rmvnorm(n = 1, mean = as.numeric(means[, comp]))
+}
+
+dat <- as.data.frame(dat)
+
+write.csv(dat, file = "difficult-mix.csv", row.names = FALSE)
+```
+
