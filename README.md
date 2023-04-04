@@ -4,6 +4,9 @@ A Julia implementation of the methods in the paper "Parallel Tempering With a Va
 Surjanovic, Syed, Bouchard-Côté, and Campbell. NeurIPS (2022). https://arxiv.org/abs/2206.00080. 
 The Julia experiments from the paper can also be found in this repository.
 
+**Note:** For a more up-to-date and distributed implementation of PT with a variational reference, please visit our 
+Pigeons.jl repo: https://github.com/Julia-Tempering/Pigeons.jl.
+
 
 ## Installation
 1. Make sure you have the R "mcmcse" package installed. In R, run
